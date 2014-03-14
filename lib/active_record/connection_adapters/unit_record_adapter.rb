@@ -22,7 +22,7 @@ class ActiveRecord::ConnectionAdapters::UnitRecordAdapter < ::ActiveRecord::Conn
       end
   end
 
-  def truncate_table
+  def truncate_table(table_name, options={})
     raise_or_noop
   end
 
@@ -63,7 +63,7 @@ class ActiveRecord::ConnectionAdapters::UnitRecordAdapter < ::ActiveRecord::Conn
   
   def insert(sql, name = nil, pk = nil, id_value = nil, sequence_name = nil)
     raise_or_noop
-  end if Rails::VERSION::MAJOR == 1
+  end if defined?(Rails::VERSION::MAJOR) && Rails::VERSION::MAJOR == 1
 
   def select_rows(sql, name = nil)
     raise_or_noop []
@@ -84,7 +84,11 @@ class ActiveRecord::ConnectionAdapters::UnitRecordAdapter < ::ActiveRecord::Conn
   def rename_column(table_name, column_name, new_column_name)
     raise_or_noop
   end
-  
+
+  def add_foreign_key(table_name, column_names, target_table, key_name, options = {})
+    raise_or_noop
+  end
+
   def tables
     @cached_columns.keys
   end
