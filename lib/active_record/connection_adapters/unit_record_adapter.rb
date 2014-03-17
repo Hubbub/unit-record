@@ -21,7 +21,11 @@ class ActiveRecord::ConnectionAdapters::UnitRecordAdapter < ::ActiveRecord::Conn
         ActiveRecord::ConnectionAdapters::Column.new(c.name.to_s, c.default, c.sql_type, c.null)
       end
   end
-  
+
+  def truncate_table
+    raise_or_noop
+  end
+
   def native_database_types
     # Copied from the MysqlAdapter so ColumnDefinition#sql_type will work
     {
